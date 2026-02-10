@@ -25,7 +25,8 @@ The specification is portable across ChatGPT, Claude, Gemini, and OpenWebUI. We 
   title={TDL: A Four-Layer Architecture for LLM-Based Tutors with Decoupled Instructional Methodology},
   author={Pernías Peco, Pedro A. and Escobar Esteban, María P.},
   year={2025},
-  note={Working paper}
+  url={https://github.com/ppernias/tdl-spec},
+  note={Working paper. Specification and tools available at GitHub repository}
 }
 ```
 
