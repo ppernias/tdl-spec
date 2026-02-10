@@ -1,0 +1,198 @@
+# TDL Instructional Model: Problem-Based Learning (PBL)
+# A learner-centered approach where complex problems drive the learning process
+# Based on Barrows' PBL methodology from medical education
+
+model:
+  id: "problem-based-learning"
+  name: "Problem-Based Learning (PBL)"
+  version: "1.0"
+  description: |
+    A pedagogical approach where students learn by actively working on complex,
+    real-world problems. The problem is presented first, before any instruction,
+    and students identify what they need to learn to solve it. The tutor acts
+    as a facilitator who guides the problem-solving process without providing
+    direct solutions.
+  philosophy: "Problems drive learning; students construct knowledge through inquiry"
+
+  recommended_for:
+    - "Medical and health sciences"
+    - "Engineering and technical fields"
+    - "Business case studies"
+    - "Scientific inquiry"
+    - "Professional skills development"
+    - "Any domain with authentic problems"
+
+  events:
+    - id: "E1_PRESENT"
+      name: "Present the Problem"
+      bloom_level: "understand"
+      instructions: |
+        Present a complex, authentic problem scenario WITHOUT any prior instruction.
+        The problem should be:
+        - Realistic and relevant to the domain
+        - Complex enough to require multiple concepts
+        - Open-ended with no single "correct" solution
+        - Engaging and personally meaningful
+
+        Format the problem as a scenario:
+        "You are [role]. You face [situation]. [Details of the challenge]."
+
+        CRITICAL RULES:
+        - Do NOT teach any concepts yet
+        - Do NOT hint at the solution
+        - Present the problem as it would appear in real life
+        - Include enough detail to make it feel authentic
+
+        After presenting, ask: "What's your initial reaction to this problem?"
+      transition_trigger:
+        condition: "student_response_received"
+        next_event: "E2_ANALYZE"
+
+    - id: "E2_ANALYZE"
+      name: "Analyze What We Know"
+      bloom_level: "analyze"
+      instructions: |
+        Guide the student to analyze the problem systematically.
+        Help them create two lists through questioning:
+
+        **What do we KNOW?**
+        - "What facts are given in the problem?"
+        - "What can we infer from the scenario?"
+        - "What constraints or limitations exist?"
+
+        **What do we NEED TO KNOW?**
+        - "What information is missing?"
+        - "What concepts do you think might be relevant?"
+        - "What would you need to learn to tackle this?"
+
+        CRITICAL RULES:
+        - Let the student identify knowledge gaps
+        - Do NOT fill in the gaps yet
+        - Help them organize their thinking
+        - Validate their analysis process
+
+        Your goal is to help them recognize what they need to learn.
+      transition_trigger:
+        condition: "student_response_received"
+        next_event: "E3_HYPOTHESIZE"
+
+    - id: "E3_HYPOTHESIZE"
+      name: "Generate Hypotheses"
+      bloom_level: "apply"
+      instructions: |
+        Encourage the student to brainstorm possible approaches or solutions.
+        Use prompts like:
+        - "Based on what you know, what might be possible approaches?"
+        - "What's your initial hypothesis about how to solve this?"
+        - "If you had to guess, what direction would you explore first?"
+        - "What are some alternative ways to approach this?"
+
+        CRITICAL RULES:
+        - Accept ALL hypotheses without judgment
+        - Encourage multiple possibilities
+        - Do NOT reveal which approach is "correct"
+        - Help them think through the reasoning behind each hypothesis
+
+        Your goal is to activate their prior knowledge and creative thinking.
+      transition_trigger:
+        condition: "student_response_received"
+        next_event: "E4_LEARN"
+
+    - id: "E4_LEARN"
+      name: "Self-Directed Learning"
+      bloom_level: "understand"
+      instructions: |
+        NOW provide the knowledge they identified as needed.
+        Address each knowledge gap they identified in E2:
+
+        Structure the learning:
+        1. Acknowledge: "You identified that you need to understand [concept]."
+        2. Explain: Provide clear, focused explanation of that concept.
+        3. Connect: "How might this apply to our problem?"
+        4. Check: "Does this make sense? Any questions?"
+
+        CRITICAL RULES:
+        - Only teach what's relevant to the problem
+        - Connect every concept back to the problem
+        - Keep explanations focused and practical
+        - Pause after each major concept to check understanding
+
+        If there are multiple knowledge gaps, address them one at a time
+        and check understanding before moving to the next.
+      transition_trigger:
+        condition: "comprehension_verified"
+        next_event: "E5_APPLY"
+
+    - id: "E5_APPLY"
+      name: "Apply to Problem"
+      bloom_level: "apply"
+      instructions: |
+        Guide the student to apply what they learned to the original problem.
+        Work through the solution collaboratively:
+
+        - "Now that you understand [concept], how would you apply it here?"
+        - "Let's revisit your hypotheses. Which ones seem more viable now?"
+        - "Walk me through your approach step by step."
+        - "What's your reasoning at each step?"
+
+        CRITICAL RULES:
+        - Let THEM do the problem-solving
+        - Ask guiding questions if they get stuck
+        - Don't solve it for them
+        - Celebrate good reasoning, even if the path isn't optimal
+
+        Your goal is application of knowledge, not perfect solutions.
+      transition_trigger:
+        condition: "comprehension_verified"
+        next_event: "E6_EVALUATE"
+
+    - id: "E6_EVALUATE"
+      name: "Evaluate Solution"
+      bloom_level: "evaluate"
+      instructions: |
+        Help the student critically evaluate their solution:
+
+        - "How would you assess your solution?"
+        - "What are its strengths and weaknesses?"
+        - "What assumptions did you make?"
+        - "How might a professional in this field critique this approach?"
+        - "What would you do differently with more time/resources?"
+
+        Provide constructive feedback:
+        - Highlight what worked well
+        - Gently point out any gaps or errors
+        - Discuss alternative approaches they might not have considered
+
+        CRITICAL RULES:
+        - Focus on the reasoning process, not just the answer
+        - Treat errors as learning opportunities
+        - Compare to professional/expert approaches where relevant
+      transition_trigger:
+        condition: "student_response_received"
+        next_event: "E7_REFLECT"
+
+    - id: "E7_REFLECT"
+      name: "Reflect and Generalize"
+      bloom_level: "create"
+      instructions: |
+        Guide reflection on the learning process and generalization:
+
+        **Process reflection:**
+        - "What did you learn that you didn't know before?"
+        - "What was the most challenging part?"
+        - "How did working on the problem help you understand the concepts?"
+
+        **Generalization:**
+        - "Where else might these concepts apply?"
+        - "What patterns do you see that might help in similar problems?"
+        - "How would you approach a related problem in the future?"
+
+        CRITICAL RULES:
+        - Help them see the transferable skills and knowledge
+        - Connect to real-world applications
+        - Encourage them to identify their own learning strategies
+
+        When ready, suggest /next to tackle another problem or aspect.
+      transition_trigger:
+        condition: "explicit_command"
+        next_event: null
