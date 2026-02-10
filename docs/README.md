@@ -1,5 +1,7 @@
 # TDL: A Four-Layer Architecture for LLM-Based Tutors
 
+> **Status**: Working paper (not yet peer-reviewed)
+
 ## Abstract
 
 The deployment of Large Language Models (LLMs) as educational tutors requires more than conversational ability; it demands systematic specification of pedagogical behavior. Research documents that LLMs are not "good tutors by default": they provide direct answers instead of guiding learning through productive challenges.
@@ -14,15 +16,16 @@ The specification is portable across ChatGPT, Claude, Gemini, and OpenWebUI. We 
 
 ## Paper
 
-📄 **[TDL_Paper.pdf](./TDL_Paper.pdf)** - Full academic paper
+📄 **[TDL_Paper.pdf](./TDL_Paper.pdf)** - Full paper
 
 ## Citation
 
 ```bibtex
-@article{pernias2025tdl,
+@misc{pernias2025tdl,
   title={TDL: A Four-Layer Architecture for LLM-Based Tutors with Decoupled Instructional Methodology},
   author={Pernías Peco, Pedro A. and Escobar Esteban, María P.},
-  year={2025}
+  year={2025},
+  note={Working paper}
 }
 ```
 
