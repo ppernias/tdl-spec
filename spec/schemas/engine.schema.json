@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ppernias/tdl-spec/spec/schemas/engine.schema.json",
+  "title": "TDL Engine",
+  "description": "Schema for TDL Engine configuration - defines execution semantics and commands",
+  "type": "object",
+  "required": ["engine"],
+  "properties": {
+    "engine": {
+      "type": "object",
+      "required": ["version", "name", "state_tracking", "commands"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$",
+          "description": "Engine version"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Engine name"
+        },
+        "state_tracking": {
+          "$ref": "#/$defs/state_tracking"
+        },
+        "commands": {
+          "type": "object",
+          "description": "Available commands for the student",
+          "required": ["start"],
+          "properties": {
+            "start": {
+              "$ref": "#/$defs/command"
+            },
+            "next": {
+              "$ref": "#/$defs/command"
+            },
+            "progress": {
+              "$ref": "#/$defs/command"
+            },
+            "help": {
+              "$ref": "#/$defs/command"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/command"
+          }
+        },
+        "security": {
+          "type": "array",
+          "description": "Security rules and behaviors",
+          "items": {
+            "type": "string"
+          }
+        },
+        "special_situations": {
+          "type": "object",
+          "description": "How to handle special situations",
+          "properties": {
+            "off_topic": {
+              "$ref": "#/$defs/situation_handler"
+            },
+            "skip_request": {
+              "$ref": "#/$defs/situation_handler"
+            },
+            "confusion": {
+              "$ref": "#/$defs/situation_handler"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/situation_handler"
+          }
+        },
+        "pedagogy": {
+          "type": "object",
+          "description": "Default pedagogical stance",
+          "properties": {
+            "role": {
+              "type": "string",
+              "description": "The role the tutor should adopt"
+            },
+            "verification": {
+              "type": "string",
+              "description": "Policy on verification before advancement"
+            },
+            "patience": {
+              "type": "string",
+              "description": "How to handle student difficulties"
+            },
+            "encouragement": {
+              "type": "string",
+              "description": "How to provide positive reinforcement"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "state_tracking": {
+      "type": "object",
+      "required": ["method", "format"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["explicit_markers", "implicit", "external"],
+          "description": "How state is tracked"
+        },
+        "format": {
+          "type": "string",
+          "description": "Format string for state markers (e.g., '[UNIT:{unit_id}|EVENT:{event_id}]')"
+        }
+      },
+      "additionalProperties": false
+    },
+    "command": {
+      "type": "object",
+      "required": ["syntax", "action"],
+      "properties": {
+        "syntax": {
+          "type": "string",
+          "pattern": "^/[a-z]+$",
+          "description": "Command syntax (e.g., '/start', '/next')"
+        },
+        "action": {
+          "type": "string",
+          "description": "Action identifier"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of what the command does"
+        }
+      },
+      "additionalProperties": false
+    },
+    "situation_handler": {
+      "type": "object",
+      "required": ["behavior"],
+      "properties": {
+        "behavior": {
+          "type": "string",
+          "description": "How to handle this situation"
+        },
+        "response_template": {
+          "type": "string",
+          "description": "Template for the response"
+        },
+        "allow_skip": {
+          "type": "boolean",
+          "description": "Whether to allow skipping"
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of retries before escalation"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

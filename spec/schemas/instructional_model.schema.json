@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ppernias/tdl-spec/spec/schemas/instructional_model.schema.json",
+  "title": "TDL Instructional Model",
+  "description": "Schema for TDL Instructional Model files - defines pedagogical methodology as a sequence of events",
+  "type": "object",
+  "required": ["model"],
+  "properties": {
+    "model": {
+      "type": "object",
+      "required": ["id", "name", "version", "events"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Unique identifier in lowercase with hyphens (e.g., 'bloom-8step-interactive')"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable name of the instructional model"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$",
+          "description": "Semantic version (e.g., '1.0', '1.0.1')"
+        },
+        "description": {
+          "type": "string",
+          "description": "Extended description of the model's purpose and approach"
+        },
+        "philosophy": {
+          "type": "string",
+          "description": "Core pedagogical philosophy (e.g., 'Never advance without verification')"
+        },
+        "recommended_for": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of domains or content types this model works well for"
+        },
+        "events": {
+          "type": "array",
+          "minItems": 2,
+          "description": "Sequence of instructional events (minimum 2 required)",
+          "items": {
+            "$ref": "#/$defs/event"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "event": {
+      "type": "object",
+      "required": ["id", "name", "instructions", "transition_trigger"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^E[0-9]+_[A-Z]+$",
+          "description": "Event identifier (e.g., 'E1_ACTIVATE', 'E2_OBJECTIVES')"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable name of the event"
+        },
+        "bloom_level": {
+          "type": "string",
+          "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create"],
+          "description": "Bloom's taxonomy level targeted by this event"
+        },
+        "instructions": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Detailed instructions for the LLM on how to execute this event"
+        },
+        "transition_trigger": {
+          "$ref": "#/$defs/transition_trigger"
+        }
+      },
+      "additionalProperties": false
+    },
+    "transition_trigger": {
+      "type": "object",
+      "required": ["condition"],
+      "properties": {
+        "condition": {
+          "type": "string",
+          "enum": [
+            "student_response_received",
+            "comprehension_verified",
+            "explicit_command",
+            "auto"
+          ],
+          "description": "Condition that triggers transition to next event"
+        },
+        "next_event": {
+          "type": ["string", "null"],
+          "description": "ID of the next event, or null if this is the last event in the unit"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
