@@ -1,0 +1,183 @@
+# TDL Instructional Model: Bloom 8-Step Interactive
+# A comprehensive pedagogical model based on Gagné's events and Bloom's taxonomy
+# See: TDL Paper, Section VI
+
+model:
+  id: "bloom-8step-interactive"
+  name: "Bloom 8-Step Interactive"
+  version: "1.0"
+  description: |
+    Eight instructional events designed for deep understanding of technical concepts.
+    Emphasizes activation of prior knowledge, verification before advancement,
+    and practical application.
+  philosophy: "Never advance without verification"
+
+  # Target domains where this model works well
+  recommended_for:
+    - "Technical concepts"
+    - "Scientific topics"
+    - "Programming fundamentals"
+    - "Any content requiring deep understanding"
+
+  events:
+    - id: "E1_ACTIVATE"
+      name: "Activate Prior Knowledge"
+      bloom_level: "remember"
+      instructions: |
+        Begin by exploring what the student already knows about the topic.
+        Ask open-ended questions like:
+        - "What do you already know about [topic]?"
+        - "Have you encountered [concept] before?"
+
+        Identify:
+        - Correct prior knowledge (build upon it)
+        - Misconceptions (address them gently)
+        - Knowledge gaps (note for later)
+
+        Do NOT lecture yet. This is a diagnostic phase.
+      transition_trigger:
+        condition: "student_response_received"
+        next_event: "E2_OBJECTIVES"
+
+    - id: "E2_OBJECTIVES"
+      name: "Present Learning Objectives"
+      bloom_level: "understand"
+      instructions: |
+        Clearly state what the student will learn in this unit.
+        Use action verbs aligned with Bloom's taxonomy:
+        - "By the end of this unit, you will be able to..."
+
+        Connect objectives to:
+        - Student's prior knowledge (from E1)
+        - Real-world applications
+        - Future learning in the course
+
+        Keep it concise: 2-3 objectives maximum.
+      transition_trigger:
+        condition: "student_response_received"
+        next_event: "E3_EXPLAIN"
+
+    - id: "E3_EXPLAIN"
+      name: "Present Content"
+      bloom_level: "understand"
+      instructions: |
+        Present the core content using the unit's prompt as guidance.
+
+        Strategies:
+        - Start with the big picture, then details
+        - Use analogies from everyday life
+        - Include concrete examples
+        - Break complex ideas into smaller pieces
+
+        Adapt based on E1 findings:
+        - Skip what they already know
+        - Emphasize areas of confusion
+        - Address misconceptions explicitly
+
+        Use formatting (lists, emphasis) for clarity.
+      transition_trigger:
+        condition: "student_response_received"
+        next_event: "E4_VERIFY"
+
+    - id: "E4_VERIFY"
+      name: "Check Understanding"
+      bloom_level: "understand"
+      instructions: |
+        Verify the student understood the explanation.
+
+        Methods:
+        - Ask them to explain in their own words
+        - Pose a conceptual question (not just recall)
+        - Present a scenario: "What would happen if...?"
+
+        If understanding is incomplete:
+        - Identify the specific confusion
+        - Offer an alternative explanation
+        - Use a different analogy or example
+        - Return to E3 if necessary
+
+        Do NOT advance until comprehension is confirmed.
+      transition_trigger:
+        condition: "comprehension_verified"
+        next_event: "E5_EXAMPLE"
+
+    - id: "E5_EXAMPLE"
+      name: "Worked Example"
+      bloom_level: "apply"
+      instructions: |
+        Walk through a complete example, showing your reasoning.
+
+        Structure:
+        1. Present the problem/scenario
+        2. State the approach before solving
+        3. Execute step by step, explaining each
+        4. Highlight common pitfalls
+        5. Summarize the key takeaways
+
+        Make thinking visible: "First I look at... because..."
+        Connect back to concepts from E3.
+      transition_trigger:
+        condition: "student_response_received"
+        next_event: "E6_PRACTICE"
+
+    - id: "E6_PRACTICE"
+      name: "Guided Practice"
+      bloom_level: "apply"
+      instructions: |
+        Present a similar problem for the student to solve.
+
+        Scaffolding:
+        - Start with hints available
+        - Let them attempt before correcting
+        - Ask guiding questions rather than giving answers
+
+        Feedback:
+        - If correct: Confirm and explain WHY it's correct
+        - If incorrect: Identify the error type, guide to correction
+        - If stuck: Break down into smaller steps
+
+        This is learning, not testing. Encourage attempts.
+      transition_trigger:
+        condition: "comprehension_verified"
+        next_event: "E7_CONNECT"
+
+    - id: "E7_CONNECT"
+      name: "Connect and Relate"
+      bloom_level: "analyze"
+      instructions: |
+        Help the student connect this unit to the broader context.
+
+        Connections to make:
+        - Previous units in this course
+        - Related concepts in other domains
+        - Real-world applications
+        - Common variations or extensions
+
+        Questions to prompt reflection:
+        - "How does this relate to [previous topic]?"
+        - "Where might you encounter this in practice?"
+        - "What would change if [variation]?"
+      transition_trigger:
+        condition: "student_response_received"
+        next_event: "E8_SUMMARIZE"
+
+    - id: "E8_SUMMARIZE"
+      name: "Summarize and Conclude"
+      bloom_level: "evaluate"
+      instructions: |
+        Conclude the unit with a clear summary.
+
+        Include:
+        - Key concepts covered (bullet points)
+        - Main takeaways (2-3 sentences)
+        - How this prepares them for the next unit
+
+        Ask the student to self-assess:
+        - "On a scale of 1-5, how confident do you feel?"
+        - "What aspect would you like to revisit?"
+
+        Offer to clarify anything before moving on.
+        Only suggest /next when student is ready.
+      transition_trigger:
+        condition: "explicit_command"
+        next_event: null  # End of unit; advance to next learning unit

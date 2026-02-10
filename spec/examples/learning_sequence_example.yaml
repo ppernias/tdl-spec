@@ -1,0 +1,175 @@
+# TDL Learning Sequence: Generative AI Fundamentals
+# Example course demonstrating TDL structure and features
+# See: TDL Paper, Section V
+
+sequence:
+  id: "generative-ai-fundamentals"
+  name: "Generative AI Fundamentals"
+  version: "1.0"
+  description: |
+    An introductory course on Generative AI concepts.
+    Covers foundation models, transformers, attention mechanisms,
+    and practical applications.
+  author: "Pedro Pernías"
+  license: "CC-BY-4.0"
+
+  # The instructional model this sequence uses
+  extends: "instructional_model_bloom8.yaml"
+
+  # External content file (optional)
+  source_content:
+    - file: "content_generative_ai.md"
+      type: "reference"
+      description: "Detailed reference material for each topic"
+
+  # Tutor personality and behavior
+  tutor_profile:
+    name: "Alex"
+    personality: |
+      Enthusiastic and patient AI tutor specializing in making
+      complex technical concepts accessible.
+
+      Communication style:
+      - Uses everyday analogies (cooking, building, etc.)
+      - Avoids jargon without explanation
+      - Celebrates curiosity and questions
+      - Admits when something is genuinely difficult
+
+      The Felix example is your favorite for explaining attention.
+      Never claim AI "understands" like humans do.
+
+  # Global behaviors
+  behaviors:
+    response_length: "medium"  # short, medium, long
+    language: "en"
+    formality: "conversational"
+    use_emoji: false
+    code_examples: true
+
+  # The actual course content
+  learning_units:
+    - id: "LU1"
+      title: "What is Generative AI?"
+      objectives:
+        - level: "understand"
+          description: "Explain what distinguishes generative AI from other AI types"
+        - level: "remember"
+          description: "List common examples of generative AI applications"
+      prompt: |
+        Key points to cover:
+        - Generative vs discriminative models
+        - Creates NEW content (text, images, code, music)
+        - Not just classification or prediction
+
+        Analogies:
+        - Discriminative = art critic (judges existing art)
+        - Generative = artist (creates new art)
+
+        Examples: ChatGPT, DALL-E, Midjourney, GitHub Copilot
+
+        Common misconception: "AI understands what it generates"
+        Address this carefully.
+      next: "LU2"
+
+    - id: "LU2"
+      title: "Foundation Models"
+      objectives:
+        - level: "understand"
+          description: "Explain what a foundation model is and why it matters"
+        - level: "analyze"
+          description: "Distinguish between foundation and fine-tuned models"
+      prompt: |
+        Key points:
+        - Large pre-trained models
+        - Serve as BASE for many specific tasks
+        - Trained on massive diverse data
+        - Can be fine-tuned for specific uses
+
+        Analogy: Building foundation
+        - Foundation = general knowledge base
+        - Building on top = specific applications
+
+        Examples: GPT-4, Claude, LLaMA, PaLM
+
+        Emphasize: These are not magic; they're statistical patterns
+        learned from training data.
+      source_sections:
+        - "Section: Foundation Models"
+      next: "LU3"
+
+    - id: "LU3"
+      title: "The Transformer Architecture"
+      objectives:
+        - level: "understand"
+          description: "Explain the basic idea behind transformers"
+        - level: "remember"
+          description: "Recall that transformers replaced RNNs"
+      prompt: |
+        Key points:
+        - Introduced in 2017 paper "Attention is All You Need"
+        - Replaced recurrent neural networks (RNNs)
+        - Processes entire sequences in parallel
+        - Key innovation: self-attention mechanism
+
+        Historical context:
+        - Before: RNNs processed one word at a time (slow, forgetful)
+        - After: Transformers see everything at once
+
+        Don't go too deep into math. Focus on intuition.
+      source_sections:
+        - "Section: Transformer Architecture"
+      next: "LU4"
+
+    - id: "LU4"
+      title: "The Attention Mechanism"
+      objectives:
+        - level: "understand"
+          description: "Explain how attention allows models to focus on relevant parts"
+        - level: "apply"
+          description: "Identify what a model might attend to in a given example"
+      prompt: |
+        USE THE FELIX EXAMPLE - this is key:
+
+        "Felix saw a black cat and a white cat. He gave food to it."
+
+        Problem: What does "it" refer to?
+        - Could be black cat or white cat
+        - Humans use context to guess
+        - Machines need a mechanism to "look back"
+
+        Attention = the mechanism that lets the model "look back"
+        at relevant previous words when processing each word.
+
+        Visual analogy: Highlighter marking relevant words.
+
+        After Felix example, use simpler examples:
+        - "The trophy doesn't fit in the suitcase because it's too big"
+        - What does "it" refer to? (trophy or suitcase?)
+      source_sections:
+        - "Section: Attention Mechanism"
+      next: "LU5"
+
+    - id: "LU5"
+      title: "Prompting and Prompt Engineering"
+      objectives:
+        - level: "apply"
+          description: "Write effective prompts for generative AI systems"
+        - level: "evaluate"
+          description: "Critique and improve a given prompt"
+      prompt: |
+        Key points:
+        - Prompt = the input/instruction you give the model
+        - Quality of output depends heavily on prompt quality
+        - Prompt engineering = skill of crafting effective prompts
+
+        Techniques to teach:
+        1. Be specific and detailed
+        2. Provide context
+        3. Give examples (few-shot)
+        4. Specify format of desired output
+        5. Use system prompts for behavior
+
+        Practice: Give a vague prompt, then improve it together.
+
+        Common mistake: Assuming the model "knows what you mean"
+      next: null  # End of sequence
